@@ -9,6 +9,24 @@ class Todo {
     private:
         fstream myfile;
 
+         vector<string> vectorize()
+        {
+            vector<string> items;
+            string myline;
+            myfile.open("tasks.txt");
+
+            if (myfile.is_open()) {
+                while (myfile){
+                    getline(myfile, myline);
+                    items.push_back(myline);
+                }
+            }
+            myfile.close();
+            items.pop_back();
+
+            return items;
+        }
+
     public:
         void showEntireTasks()
         {
@@ -48,6 +66,18 @@ class Todo {
             myfile.close();
         }
 
+        void pop()
+        {
+            vector<string> items = vectorize();
+            myfile.open("tasks.txt", fstream::out | fstream::trunc);
+            items.erase(items.begin());
+            
+            for (string item: items)
+                myfile<<item<<'\n';
+
+            myfile.close();
+        }
+
         void clear()
         {
             myfile.open("tasks.txt", fstream::out | fstream::trunc);
@@ -78,6 +108,8 @@ int main(int argc, char **argv)
     }
     else if (strcmp(argv[1], "clear") == 0)
         tasks.clear();
+    else if (strcmp(argv[1], "pop") == 0)
+        tasks.pop();
     else
         return 1;   
 
