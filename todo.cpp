@@ -28,7 +28,8 @@ class Todo {
         }
 
     public:
-        ~Todo() {
+        ~Todo()
+        {
             if (myfile.is_open())
                 myfile.close();
         }
@@ -93,6 +94,30 @@ class Todo {
             myfile << "";
             myfile.close();
         }
+
+        void insert(int position, string newItem)
+        {
+            vector<string> items = vectorize();
+
+            try {
+                if (position < 0 || position > items.size() + 1) {
+                    //We place items.size() + 1 so we can use insert for appending as well
+                    throw position;
+                }
+
+                myfile.open("tasks.txt", fstream::out | fstream::trunc);
+                items.insert(items.begin() + (position - 1), newItem);
+
+                for (string item: items)
+                    myfile << item << '\n';
+
+                myfile.close();
+            } catch(int pos) {
+                cout<<"Insertion Error: "<<pos<<" not within valid range\n";
+            } catch(...) {
+                cout<<"The program encountered an error\n";
+            }
+        }
 };
 
 int main(int argc, char **argv)
@@ -122,6 +147,16 @@ int main(int argc, char **argv)
     else if (strcmp(argv[1], "delete") == 0) {
         int pos = stoi(argv[2]);
         tasks.pop(pos);
+    }
+    else if (strcmp(argv[1], "insert") == 0) {
+        string todoItem="";
+        int pos = stoi(argv[2]);
+        for (int i=3; i<argc; i++) {
+            todoItem += argv[i];
+            todoItem += " ";
+        }
+        todoItem.pop_back();
+        tasks.insert(pos, todoItem);
     }
     else
         return 1;   
