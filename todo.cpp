@@ -30,19 +30,12 @@ class Todo {
     public:
         void showEntireTasks()
         {
-            string myline;
-            int lineNum = 1;
+            vector<string> items = vectorize();
+            int count = 1;
 
-            myfile.open("tasks.txt");
-
-            if (myfile.is_open()) {
-                while (myfile) {
-                    getline(myfile, myline);
-                    cout<< lineNum++ <<" "<<myline<<endl;
-                }
+            for(string item: items) {
+                cout<<count++<<") "<<item<<endl;
             }
-
-            myfile.close();
         }
 
         void show()
