@@ -1,4 +1,2 @@
-ADBMS Module 1
 ADBMS Module 2
-CGPU Registration
 FP Presentation

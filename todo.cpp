@@ -59,16 +59,27 @@ class Todo {
             myfile.close();
         }
 
-        void pop()
+        void pop(int position=1)
         {
             vector<string> items = vectorize();
-            myfile.open("tasks.txt", fstream::out | fstream::trunc);
-            items.erase(items.begin());
-            
-            for (string item: items)
-                myfile<<item<<'\n';
 
-            myfile.close();
+            try {
+                if (position < 1 || position > items.size()) {
+                    throw position;
+                }
+
+                myfile.open("tasks.txt", fstream::out | fstream::trunc);
+                items.erase(items.begin() + (position - 1));
+                
+                for (string item: items)
+                    myfile<<item<<'\n';
+
+                myfile.close();
+            } catch(int pos) {
+                cout<<"Insertion Error: "<<pos<<" not within valid range\n";
+            } catch(...) {
+                cout<<"The program encountered an error\n";
+            }
         }
 
         void clear()
@@ -103,6 +114,10 @@ int main(int argc, char **argv)
         tasks.clear();
     else if (strcmp(argv[1], "pop") == 0)
         tasks.pop();
+    else if (strcmp(argv[1], "delete") == 0) {
+        int pos = stoi(argv[2]);
+        tasks.pop(pos);
+    }
     else
         return 1;   
 
