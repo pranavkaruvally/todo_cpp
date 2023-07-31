@@ -47,6 +47,13 @@ class Todo {
             myfile << newItem << '\n';
             myfile.close();
         }
+
+        void clear()
+        {
+            myfile.open("tasks.txt", fstream::out | fstream::trunc);
+            myfile << "";
+            myfile.close();
+        }
 };
 
 int main(int argc, char **argv)
@@ -69,6 +76,8 @@ int main(int argc, char **argv)
         todoItem.pop_back();
         tasks.push(todoItem);
     }
+    else if (strcmp(argv[1], "clear") == 0)
+        tasks.clear();
     else
         return 1;   
 

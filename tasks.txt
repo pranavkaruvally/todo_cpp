@@ -1,5 +1,4 @@
 ADBMS Module 1
-CGPU registration
-ADBMS module 2
-Functional Programming presentation
-Bath and eat
+ADBMS Module 2
+CGPU Registration
+FP presentation
