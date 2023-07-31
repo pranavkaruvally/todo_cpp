@@ -28,6 +28,11 @@ class Todo {
         }
 
     public:
+        ~Todo() {
+            if (myfile.is_open())
+                myfile.close();
+        }
+
         void showEntireTasks()
         {
             vector<string> items = vectorize();
