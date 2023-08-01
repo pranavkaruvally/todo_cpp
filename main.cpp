@@ -1,9 +1,13 @@
 #include "todo.h"
 
+void help(void);
+
 int main(int argc, char **argv)
 {
-    if (argc < 2)
+    if (argc < 2) {
+       help();
        return 1;
+    }
 
     Todo tasks;
 
@@ -46,8 +50,31 @@ int main(int argc, char **argv)
         int p2 = stoi(argv[3]);
         tasks.swapTask(p1, p2);
     }
-    else
-        return 1;   
+    else if (strcmp(argv[1], "help") == 0)
+        help();
+    else {
+        help(); 
+        return 1; 
+    } 
 
     return 0;
+}
+
+void help(void) {
+    cout << "todoc is to be used with following arguments\n\n";
+    cout << "help: To display help\n";
+    cout << "show: Shows the top priority task\n";
+    cout << "showall: Shows all of the tasks\n";
+    cout << "push: Add a new task to the bottom of the list\n";
+    cout << "\tUsage: todoc push <item name>\n";
+    cout << "pop: Delete the top priority task\n";
+    cout << "insert: Insert a task to a specific position\n";
+    cout << "\tUsage: todoc insert <position> <item name>\n";
+    cout <<"delete: Delete a task from a specific position\n";
+    cout << "\tUsage: todoc delete <position>\n";
+    cout << "clear: To delete all tasks from the list\n";
+    cout << "insertfrom: To insert tasks from a specific filename\n";
+    cout << "\tUsage: todoc insertfrom <filename>\n";
+    cout << "swap: To swap the priority of two tasks\n";
+    cout << "\tUsage: todoc swap <position1> <position2>\n";
 }
