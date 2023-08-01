@@ -16,13 +16,21 @@ int main(int argc, char **argv)
     else if (strcmp(argv[1], "show") == 0)
         tasks.show();
     else if (strcmp(argv[1], "push") == 0) {
-        string todoItem="";
-        for (int i=2; i<argc; i++) {
-            todoItem += argv[i];
-            todoItem += " ";
+        if (argc == 2) {
+            string streamInput;
+            getline(cin, streamInput);
+            if (streamInput == "")
+                return 1;
+            tasks.push(streamInput);
+        } else {
+            string todoItem="";
+            for (int i=2; i<argc; i++) {
+                todoItem += argv[i];
+                todoItem += " ";
+            }
+            todoItem.pop_back();
+            tasks.push(todoItem);
         }
-        todoItem.pop_back();
-        tasks.push(todoItem);
     }
     else if (strcmp(argv[1], "clear") == 0)
         tasks.clear();
