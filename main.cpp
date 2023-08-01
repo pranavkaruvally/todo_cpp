@@ -38,6 +38,9 @@ int main(int argc, char **argv)
         todoItem.pop_back();
         tasks.insert(pos, todoItem);
     }
+    else if (strcmp(argv[1], "insertfrom") == 0) {
+        tasks.insertFrom(argv[2]);
+    }
     else
         return 1;   
 

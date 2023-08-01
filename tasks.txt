@@ -1,4 +1,3 @@
-FP Presentation
-ACN Module 1
-ADBMS Module 2
-Sleep well
+install haskell
+make a powerpoint with the required data types
+Check Rijfas' project

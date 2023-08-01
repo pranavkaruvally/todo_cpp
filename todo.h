@@ -100,7 +100,7 @@ class Todo {
             vector<string> items = vectorize();
 
             try {
-                if (position < 0 || position > items.size() + 1) {
+                if (position <= 0 || position > items.size() + 1) {
                     //We place items.size() + 1 so we can use insert for appending as well
                     throw position;
                 }
@@ -116,6 +116,23 @@ class Todo {
                 cout<<"Insertion Error: "<<pos<<" not within valid range\n";
             } catch(...) {
                 cout<<"The program encountered an error\n";
+            }
+        }
+
+        void insertFrom(string fileName) {
+            string newline;
+            fstream newFile(fileName);
+            vector<string> newFileStrings;
+
+            while (newFile) {
+                getline(newFile, newline);
+                newFileStrings.push_back(newline);
+            }
+            newFile.close();
+            newFileStrings.pop_back();
+
+            for (string task: newFileStrings) {
+                this->push(task);
             }
         }
 };
