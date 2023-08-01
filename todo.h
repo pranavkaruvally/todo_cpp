@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 #include <string>
 #include <cstring>
 using namespace std;
@@ -133,6 +134,29 @@ class Todo {
 
             for (string task: newFileStrings) {
                 this->push(task);
+            }
+        }
+
+        void swapTask(int pos1, int pos2) {
+            try {
+                vector<string> items = vectorize();
+
+                if (pos1 <= 0 || pos1 > items.size())
+                    throw pos1;
+                if (pos2 <= 0 || pos2 > items.size())
+                    throw pos2;
+
+                swap(items[pos1-1], items[pos2-1]);
+                myfile.open("tasks.txt", fstream::out | fstream::trunc);
+                
+                for (int i=0; i<items.size(); i++)
+                    myfile << items[i] <<'\n';
+
+                myfile.close();
+            } catch(int pos) {
+                cout<<"Range Error: "<<pos<<" not within valid range\n";
+            } catch(...) {
+                cout << "The program encountered an error\n";
             }
         }
 };

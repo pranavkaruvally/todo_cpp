@@ -41,6 +41,11 @@ int main(int argc, char **argv)
     else if (strcmp(argv[1], "insertfrom") == 0) {
         tasks.insertFrom(argv[2]);
     }
+    else if (strcmp(argv[1], "swap") == 0) {
+        int p1 = stoi(argv[2]);
+        int p2 = stoi(argv[3]);
+        tasks.swapTask(p1, p2);
+    }
     else
         return 1;   
 
