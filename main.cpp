@@ -41,14 +41,23 @@ int main(int argc, char **argv)
         tasks.pop(pos);
     }
     else if (strcmp(argv[1], "insert") == 0) {
-        string todoItem="";
         int pos = stoi(argv[2]);
-        for (int i=3; i<argc; i++) {
-            todoItem += argv[i];
-            todoItem += " ";
+        if (argc == 3) {
+            string streamInput;
+            getline(cin, streamInput);
+            if (streamInput == "")
+                return 1;
+            tasks.insert(pos, streamInput);
         }
-        todoItem.pop_back();
-        tasks.insert(pos, todoItem);
+        else {
+            string todoItem="";
+            for (int i=3; i<argc; i++) {
+                todoItem += argv[i];
+                todoItem += " ";
+            }
+            todoItem.pop_back();
+            tasks.insert(pos, todoItem);
+        }
     }
     else if (strcmp(argv[1], "insertfrom") == 0) {
         tasks.insertFrom(argv[2]);

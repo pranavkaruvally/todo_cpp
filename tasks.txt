@@ -1,9 +1,0 @@
-Check Rijfas' project
-make a powerpoint with the required data types
-install haskell
-a major new task
-a big major task
-Some major major task
-again task
-big big task
-some major big task
