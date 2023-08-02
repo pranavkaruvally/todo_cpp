@@ -1,5 +1,8 @@
 # todo_cpp
-A CLI todo list using CPP
+A CLI todo list using CPP.
+
+This tool is for the nerds who wish not to leave their terminal windows to open up a new tab in their browser or an application to jolt down the few things they have to get done by the end of the day.
+With this program you can quickly jolt down their todo list on the go right from your terminal.
 
 # Installation
 For the moment you have to manually compile the program using `g++`.
