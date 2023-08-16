@@ -148,8 +148,8 @@ class Todo {
                 swap(items[pos1-1], items[pos2-1]);
                 myfile.open("tasks.txt", std::fstream::out | std::fstream::trunc);
                 
-                for (int i=0; i<itemsize; i++)
-                    myfile << items[i] <<'\n';
+                for (std::string item: items)
+                    myfile << item <<'\n';
 
                 myfile.close();
             } catch(int pos) {
