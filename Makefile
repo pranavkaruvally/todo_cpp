@@ -7,3 +7,6 @@ todoc: main.o
 
 todoc.o: main.cpp todo.h
 	$(CC) $(CFLAGS) -c main.cpp
+
+clean:
+	rm main.o todoc
