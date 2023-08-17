@@ -5,8 +5,6 @@ This tool is for the nerds who wish not to leave their terminal windows to open 
 With this program you can quickly write down your todo list on the go right from your terminal.
 
 # Installation
-**Note**: First and foremost you should open `todo.h` and replace the variable `FILENAME` value with your `~/.todoc/tasks.txt` in absolute path (Will fix this soon).
-
 For your installation you can run the `todoc_installer.sh` script
 ```
 chmod +x todoc_installer.sh
