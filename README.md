@@ -5,9 +5,9 @@ This tool is for the nerds who wish not to leave their terminal windows to open 
 With this program you can quickly write down your todo list on the go right from your terminal.
 
 # Installation
-For the moment you have to manually compile the program using `g++`.
+For the moment you have to manually compile the program using `make`.
 ```
-g++ main.cpp -o todoc
+make
 ```
 But soon enough a new installer will be created that would enable the program to be launched from anywhere within 
 your shell.
