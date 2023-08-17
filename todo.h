@@ -5,6 +5,8 @@
 #include <string>
 #include <cstring>
 
+const std::string FILENAME {"/home/pranav/.todoc/tasks.txt"};
+
 class Todo {
     private:
         std::fstream myfile;
@@ -13,7 +15,7 @@ class Todo {
         {
             std::vector<std::string> items;
             std::string myline;
-            myfile.open("tasks.txt");
+            myfile.open(FILENAME);
 
             if (myfile.is_open()) {
                 while (myfile){
@@ -48,7 +50,7 @@ class Todo {
         {
             std::string myline;
 
-            myfile.open("tasks.txt");
+            myfile.open(FILENAME);
 
             if (myfile.is_open()) {
                 getline(myfile, myline);
@@ -60,7 +62,7 @@ class Todo {
 
         void push(std::string newItem)
         {
-            myfile.open("tasks.txt", std::fstream::in | std::fstream::out | std::fstream::app);
+            myfile.open(FILENAME, std::fstream::in | std::fstream::out | std::fstream::app);
             myfile << newItem << '\n';
             myfile.close();
         }
@@ -74,7 +76,7 @@ class Todo {
                     throw position;
                 }
 
-                myfile.open("tasks.txt", std::fstream::out | std::fstream::trunc);
+                myfile.open(FILENAME, std::fstream::out | std::fstream::trunc);
                 items.erase(items.begin() + (position - 1));
                 
                 for (std::string item: items)
@@ -90,7 +92,7 @@ class Todo {
 
         void clear()
         {
-            myfile.open("tasks.txt", std::fstream::out | std::fstream::trunc);
+            myfile.open(FILENAME, std::fstream::out | std::fstream::trunc);
             myfile << "";
             myfile.close();
         }
@@ -105,7 +107,7 @@ class Todo {
                     throw position;
                 }
 
-                myfile.open("tasks.txt", std::fstream::out | std::fstream::trunc);
+                myfile.open(FILENAME, std::fstream::out | std::fstream::trunc);
                 items.insert(items.begin() + (position - 1), newItem);
 
                 for (std::string item: items)
@@ -119,9 +121,9 @@ class Todo {
             }
         }
 
-        void insertFrom(std::string fileName) {
+        void insertFrom(std::string FILENAME) {
             std::string newline;
-            std::fstream newFile(fileName);
+            std::fstream newFile(FILENAME);
             std::vector<std::string> newFileStrings;
 
             while (newFile) {
@@ -146,7 +148,7 @@ class Todo {
                     throw pos2;
 
                 swap(items[pos1-1], items[pos2-1]);
-                myfile.open("tasks.txt", std::fstream::out | std::fstream::trunc);
+                myfile.open(FILENAME, std::fstream::out | std::fstream::trunc);
                 
                 for (std::string item: items)
                     myfile << item <<'\n';
