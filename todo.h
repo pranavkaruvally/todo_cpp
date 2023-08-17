@@ -4,8 +4,10 @@
 #include <algorithm>
 #include <string>
 #include <cstring>
+#include <cstdlib>
 
-const std::string FILENAME {"/home/pranav/.todoc/tasks.txt"};
+const std::string HOME = getenv("HOME");
+const std::string FILENAME = HOME + "/.todoc/tasks.txt";
 
 class Todo {
     private:
