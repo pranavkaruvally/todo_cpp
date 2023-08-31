@@ -1,12 +1,9 @@
 CC = g++
-CFLAGS = -std=c++20 -Wall -Wextra -Wpedantic -Wshadow
+CFLAGS = -std=c++20 -Wall -Wextra -Wpedantic -Wshadow -lmariadbcpp
 
 all: todoc
 todoc: main.o
-	$(CC) $(CFLAGS) -o todoc main.o
-
-todoc.o: main.cpp todo.h
-	$(CC) $(CFLAGS) -c main.cpp
+	$(CC) -o todoc main.cpp $(CFLAGS)
 
 clean:
-	rm main.o todoc
+	rm todoc

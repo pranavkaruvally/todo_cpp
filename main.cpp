@@ -21,7 +21,6 @@ int main(int argc, char **argv)
 
     if (strcmp(argv[1], "showall") == 0)
         tasks.showEntireTasks();   
-    /*
     else if (strcmp(argv[1], "show") == 0)
         tasks.show();
     else if (strcmp(argv[1], "push") == 0) {
@@ -75,7 +74,7 @@ int main(int argc, char **argv)
         int p1 = std::stoi(argv[2]);
         int p2 = std::stoi(argv[3]);
         tasks.swapTask(p1, p2);
-    }*/
+    }
     else if (strcmp(argv[1], "help") == 0)
         help();
     else {

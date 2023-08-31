@@ -26,7 +26,6 @@ class Todo
 
     void showEntireTasks()
     {
-      std::cout << "Showing entire tasks\n";
       try {
         std::unique_ptr<sql::Statement> stmnt((*conn)->createStatement());
         sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM tasks");
@@ -39,4 +38,25 @@ class Todo
         std::cerr << "Error retrieving task: " << e.what() << '\n';
       }
     }
+
+    void show()
+    {}
+
+    void push(std::string newItem)
+    {}
+
+    void pop(int position=1)
+    {}
+
+    void clear()
+    {}
+
+    void insert(int position, std::string newItem)
+    {}
+
+    void insertFrom(std::string FILENAME)
+    {}
+
+    void swapTask(int pos1, int pos2)
+    {}
 };
