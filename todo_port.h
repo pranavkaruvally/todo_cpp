@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <mariadb/conncpp.hpp>
 
 class Todo
@@ -79,7 +80,22 @@ class Todo
     {}
 
     void insertFrom(std::string FILENAME)
-    {}
+    {
+      std::string newline;
+      std::fstream newFile(FILENAME);
+      std::vector<std::string> newFileStrings;
+
+      while (newFile) {
+          getline(newFile, newline);
+          newFileStrings.push_back(newline);
+      }
+      newFile.close();
+      newFileStrings.pop_back();
+
+      for (std::string task: newFileStrings) {
+          this->push(task);
+      }
+    }
 
     void swapTask(int pos1, int pos2)
     {}
