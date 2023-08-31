@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     sql::Driver *driver = sql::mariadb::get_driver_instance();
     sql::SQLString url("jdbc:mariadb://localhost:3306/todoc");
     sql::Properties properties({{"user", "pranav"}, {"password", "navaneeth"}});
-    std::unique_ptr<sql::Connection> conn(driver->connect(url, properties));
+    std::shared_ptr<sql::Connection> conn(driver->connect(url, properties));
 
 
     Todo tasks {conn};

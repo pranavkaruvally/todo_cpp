@@ -5,18 +5,18 @@
 class Todo
 {
   private:
-    std::unique_ptr<sql::Connection> *conn;
+    std::shared_ptr<sql::Connection> conn;
 
   public:
-    Todo(std::unique_ptr<sql::Connection> &conn)
+    Todo(std::shared_ptr<sql::Connection> connection)
     {
-      this->conn = &conn;
+      this->conn = connection;
     }
 
     void insertTask(std::string taskString)
     {
       try {
-        std::unique_ptr<sql::PreparedStatement> stmnt((*conn)->prepareStatement("INSERT INTO tasks (item) VALUES (?)"));
+        std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement("INSERT INTO tasks (item) VALUES (?)"));
         stmnt->setString(1, taskString);
         stmnt->executeQuery();
       }
@@ -28,7 +28,7 @@ class Todo
     void showEntireTasks()
     {
       try {
-        std::unique_ptr<sql::Statement> stmnt((*conn)->createStatement());
+        std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
         sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM tasks");
         int count = 1;
         while (res->next()) {
@@ -42,7 +42,7 @@ class Todo
     void show()
     {
       try {
-        std::unique_ptr<sql::Statement> stmnt((*conn)->createStatement());
+        std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
         sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM tasks LIMIT 1");
         res->next(); // Current position is before first row
         std::cout << res->getString(2) << '\n';
@@ -59,7 +59,7 @@ class Todo
     void pop(int position=1)
     {
       try {
-        std::unique_ptr<sql::PreparedStatement> stmnt((*conn)->prepareStatement("DELETE FROM tasks WHERE item_no = (SELECT MIN(item_no) FROM tasks)"));
+        std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement("DELETE FROM tasks WHERE item_no = (SELECT MIN(item_no) FROM tasks)"));
         stmnt->executeQuery();
       } catch(sql::SQLException &e) {
         std::cerr << "Error deleting task: " << e.what() << '\n';
@@ -69,7 +69,7 @@ class Todo
     void clear()
     {
       try{
-        std::unique_ptr<sql::PreparedStatement> stmnt((*conn)->prepareStatement("DELETE FROM tasks;"));
+        std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement("DELETE FROM tasks;"));
         stmnt->executeQuery();
       } catch(sql::SQLException &e) {
         std::cerr << "Error clearing tasks: " << e.what() << '\n';
