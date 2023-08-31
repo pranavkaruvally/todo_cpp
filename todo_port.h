@@ -29,24 +29,41 @@ class Todo
       try {
         std::unique_ptr<sql::Statement> stmnt((*conn)->createStatement());
         sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM tasks");
-
+        int count = 1;
         while (res->next()) {
-          std::cout << res->getInt(1) << ") " << res->getString(2) << '\n';
+          std::cout << count++ << ") " << res->getString(2) << '\n';
         }
-      }
-      catch(sql::SQLException& e) {
+      } catch(sql::SQLException& e) {
         std::cerr << "Error retrieving task: " << e.what() << '\n';
       }
     }
 
     void show()
-    {}
+    {
+      try {
+        std::unique_ptr<sql::Statement> stmnt((*conn)->createStatement());
+        sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM tasks LIMIT 1");
+        res->next(); // Current position is before first row
+        std::cout << res->getString(2) << '\n';
+      } catch(sql::SQLException& e) {
+        std::cerr << "Error retrieving task: " << e.what() << '\n';
+      }
+    }
 
     void push(std::string newItem)
-    {}
+    {
+      insertTask(newItem);
+    }
 
     void pop(int position=1)
-    {}
+    {
+      try {
+        std::unique_ptr<sql::PreparedStatement> stmnt((*conn)->prepareStatement("DELETE FROM tasks WHERE item_no = (SELECT MIN(item_no) FROM tasks)"));
+        stmnt->executeQuery();
+      } catch(sql::SQLException &e) {
+        std::cerr << "Error deleting task: " << e.what() << '\n';
+      }
+    }
 
     void clear()
     {}
