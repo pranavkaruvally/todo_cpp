@@ -66,7 +66,14 @@ class Todo
     }
 
     void clear()
-    {}
+    {
+      try{
+        std::unique_ptr<sql::PreparedStatement> stmnt((*conn)->prepareStatement("DELETE FROM tasks;"));
+        stmnt->executeQuery();
+      } catch(sql::SQLException &e) {
+        std::cerr << "Error clearing tasks: " << e.what() << '\n';
+      }
+    }
 
     void insert(int position, std::string newItem)
     {}
