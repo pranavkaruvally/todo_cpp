@@ -1,4 +1,6 @@
-#include "todo.h"
+//#include "todo.h"
+#include "todo_port.h"
+#include <cstring>
 
 void help(void);
 
@@ -9,10 +11,17 @@ int main(int argc, char **argv)
        return 1;
     }
 
-    Todo tasks;
+    sql::Driver *driver = sql::mariadb::get_driver_instance();
+    sql::SQLString url("jdbc:mariadb://localhost:3306/todoc");
+    sql::Properties properties({{"user", "pranav"}, {"password", "navaneeth"}});
+    std::unique_ptr<sql::Connection> conn(driver->connect(url, properties));
+
+
+    Todo tasks {conn};
 
     if (strcmp(argv[1], "showall") == 0)
         tasks.showEntireTasks();   
+    /*
     else if (strcmp(argv[1], "show") == 0)
         tasks.show();
     else if (strcmp(argv[1], "push") == 0) {
@@ -66,13 +75,13 @@ int main(int argc, char **argv)
         int p1 = std::stoi(argv[2]);
         int p2 = std::stoi(argv[3]);
         tasks.swapTask(p1, p2);
-    }
+    }*/
     else if (strcmp(argv[1], "help") == 0)
         help();
     else {
         help(); 
         return 1; 
-    } 
+    }
 
     return 0;
 }
