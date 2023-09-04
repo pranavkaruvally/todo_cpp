@@ -59,7 +59,9 @@ class Todo
     void pop(int position=1)
     {
       try {
-        std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement("DELETE FROM tasks WHERE item_no = (SELECT MIN(item_no) FROM tasks)"));
+        std::string query = "DELETE FROM tasks WHERE item = (SELECT item FROM tasks LIMIT ?, 1);";
+        std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement(query));
+        stmnt->setInt(1, position-1);
         stmnt->executeQuery();
       } catch(sql::SQLException &e) {
         std::cerr << "Error deleting task: " << e.what() << '\n';
