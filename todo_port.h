@@ -13,7 +13,7 @@ class Todo
       this->conn = connection;
     }
 
-    void insertTask(std::string taskString)
+    void push(std::string taskString)
     {
       try {
         std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement("INSERT INTO tasks (item) VALUES (?)"));
@@ -29,10 +29,10 @@ class Todo
     {
       try {
         std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
-        sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM tasks");
+        sql::ResultSet *res = stmnt->executeQuery("SELECT item FROM tasks ORDER BY item_no, tstamp DESC");
         int count = 1;
         while (res->next()) {
-          std::cout << count++ << ") " << res->getString(2) << '\n';
+          std::cout << count++ << ") " << res->getString(1) << '\n';
         }
       } catch(sql::SQLException& e) {
         std::cerr << "Error retrieving task: " << e.what() << '\n';
@@ -43,23 +43,18 @@ class Todo
     {
       try {
         std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
-        sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM tasks LIMIT 1");
+        sql::ResultSet *res = stmnt->executeQuery("SELECT item FROM tasks ORDER BY item_no, tstamp DESC LIMIT 1");
         res->next(); // Current position is before first row
-        std::cout << res->getString(2) << '\n';
+        std::cout << res->getString(1) << '\n';
       } catch(sql::SQLException& e) {
         std::cerr << "Error retrieving task: " << e.what() << '\n';
       }
     }
 
-    void push(std::string newItem)
-    {
-      insertTask(newItem);
-    }
-
     void pop(int position=1)
     {
       try {
-        std::string query = "DELETE FROM tasks WHERE item = (SELECT item FROM tasks LIMIT ?, 1);";
+        std::string query = "DELETE FROM tasks WHERE item = (SELECT item FROM tasks ORDER BY item_no, tstamp LIMIT ?, 1);";
         std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement(query));
         stmnt->setInt(1, position-1);
         stmnt->executeQuery();
