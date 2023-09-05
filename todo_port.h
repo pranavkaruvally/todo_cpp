@@ -74,7 +74,22 @@ class Todo
     }
 
     void insert(int position, std::string newItem)
-    {}
+    {
+      try{
+        std::unique_ptr<sql::Statement> positionStatement(conn->createStatement());
+        std::string limitArgs = std::to_string(position-1) + ", 1;";
+        sql::ResultSet *res = positionStatement->executeQuery("SELECT item_no FROM tasks ORDER BY item_no, tstamp DESC LIMIT " + limitArgs);
+        res->next();
+        int newPosition = res->getInt(1);
+
+        std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement("INSERT INTO tasks(item_no, item) VALUES (?, ?)"));
+        stmnt->setInt(1, newPosition);
+        stmnt->setString(2, newItem);
+        stmnt->executeQuery();
+      } catch(sql::SQLException &e) {
+        std::cerr << "Error inserting task: " << e.what() << '\n';
+      }
+    }
 
     void insertFrom(std::string FILENAME)
     {
