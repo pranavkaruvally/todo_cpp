@@ -54,7 +54,7 @@ class Todo
     void pop(int position=1)
     {
       try {
-        std::string query = "DELETE FROM tasks WHERE item = (SELECT item FROM tasks ORDER BY item_no, tstamp LIMIT ?, 1);";
+        std::string query = "DELETE FROM tasks WHERE item_no = (SELECT item_no FROM tasks ORDER BY item_no, tstamp DESC LIMIT ?, 1);";
         std::unique_ptr<sql::PreparedStatement> stmnt(conn->prepareStatement(query));
         stmnt->setInt(1, position-1);
         stmnt->executeQuery();
