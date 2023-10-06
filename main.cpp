@@ -70,11 +70,11 @@ int main(int argc, char **argv)
     else if (strcmp(argv[1], "insertfrom") == 0) {
         tasks.insertFrom(argv[2]);
     }
-    else if (strcmp(argv[1], "swap") == 0) {
-        int p1 = std::stoi(argv[2]);
-        int p2 = std::stoi(argv[3]);
-        tasks.swapTask(p1, p2);
-    }
+    //else if (strcmp(argv[1], "swap") == 0) {
+    //    int p1 = std::stoi(argv[2]);
+    //    int p2 = std::stoi(argv[3]);
+    //    tasks.swapTask(p1, p2);
+    //}
     else if (strcmp(argv[1], "help") == 0)
         help();
     else {
@@ -100,6 +100,6 @@ void help(void) {
     std::cout << "clear: To delete all tasks from the list\n";
     std::cout << "insertfrom: To insert tasks from a specific filename\n";
     std::cout << "\tUsage: todoc insertfrom <filename>\n";
-    std::cout << "swap: To swap the priority of two tasks\n";
-    std::cout << "\tUsage: todoc swap <position1> <position2>\n";
+    //std::cout << "swap: To swap the priority of two tasks\n";
+    //std::cout << "\tUsage: todoc swap <position1> <position2>\n";
 }
