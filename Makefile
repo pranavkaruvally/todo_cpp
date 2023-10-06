@@ -7,3 +7,7 @@ todoc: main.o
 
 clean:
 	rm todoc
+
+reload:
+	rm todoc
+	$(CC) -o todoc main.cpp $(CFLAGS)
